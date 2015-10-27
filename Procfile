@@ -1,1 +1,1 @@
-app: bin/run
+web: bin/hubot -a discord

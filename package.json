@@ -1,24 +1,25 @@
 {
-  "name": "lfgamers-hubot",
-  "version": "1.0.0",
-  "description": "LFGamers Hubot for Discord",
-  "main": "bin/run",
-  "devDependencies": {},
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/LFGamers/hubot.git"
-  },
-  "author": "Aaron Scherer <aequasi@gmail.com> (http://aaronscherer.me)",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/LFGamers/hubot/issues"
-  },
-  "homepage": "https://github.com/LFGamers/hubot#readme",
+  "name": "LFGBot",
+  "version": "0.0.0",
+  "private": true,
+  "author": "Aaron Scherer",
+  "description": "A semi-helpful bot for LFGamers",
   "dependencies": {
     "hubot": "^2.16.0",
-    "hubot-discord": "^1.0.0"
+    "hubot-diagnostics": "0.0.1",
+    "hubot-discord": "^1.0.0",
+    "hubot-google-images": "^0.2.2",
+    "hubot-google-translate": "^0.2.0",
+    "hubot-help": "^0.1.1",
+    "hubot-heroku-keepalive": "^1.0.0",
+    "hubot-maps": "0.0.2",
+    "hubot-pugme": "^0.1.0",
+    "hubot-redis-brain": "0.0.3",
+    "hubot-rules": "^0.1.1",
+    "hubot-scripts": "^2.16.2",
+    "hubot-shipit": "^0.2.0"
+  },
+  "engines": {
+    "node": "0.10.x"
   }
 }
