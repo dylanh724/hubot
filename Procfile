@@ -1,1 +1,1 @@
-web: bin/hubot -a discord -l "\!"
+web: bin/hubot 
