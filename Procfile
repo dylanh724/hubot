@@ -1,1 +1,1 @@
-app: bin/hubot -a discord -n LFGBot
+app: bin/run
