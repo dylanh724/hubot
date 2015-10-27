@@ -10,5 +10,6 @@
   "hubot-rules",
   "hubot-shipit",
   "hubot-youtube-v3",
-  "hubot-remind-advanced"
+  "hubot-remind-advanced",
+  "hubot-karma-classic"
 ]
