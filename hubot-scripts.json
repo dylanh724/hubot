@@ -1,10 +1,7 @@
 [
     "sms.coffee",
     "ambush.coffee",
-    "archer.coffee",
-    "ascii.coffee",
     "bitly.coffee",
     "cleverbot.coffee",
-    "commitmessage.coffee",
-    "f-ing-weather.coffee"
+    "soundcloud-info.coffee"
 ]
