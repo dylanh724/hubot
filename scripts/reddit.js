@@ -20,8 +20,7 @@ module.exports = function(robot) {
         var url = (subreddit ? "http://www.reddit.com/r/"+subreddit+"/top.json" : "http://www.reddit.com/top.json");
         robot.http(url).get( function(err, r, body) {
             if (!body) {
-                res.send("Things are very broken. Err: "+err);
-                console.log('ERROR: '+err+', R: '+r+', BODY: '+body)
+                console.log(r)
                 return;
             }
             if (body && body.match(/^302/) && body.match(/^302/)[0] =='302') {
