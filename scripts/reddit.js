@@ -43,7 +43,7 @@ module.exports = function(robot) {
         });
     }
 
-    robot.respond(/reddit\s*(start|stop|list)\s*(.+)?/i, function(res){
+    robot.respond(/redditnews\s*(start|stop|list)\s*(.+)?/i, function(res){
         
         /* Case: !reddit start <subreddit> */
         if (res.match[1] === 'start' && res.match[2]) {
