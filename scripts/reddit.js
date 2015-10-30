@@ -18,10 +18,10 @@ module.exports = function(robot) {
 
     function sendPost(robot, res, subreddit) {
         var url = (subreddit ? "http://www.reddit.com/r/"+subreddit+"/top.json" : "http://www.reddit.com/top.json");
-        robot.http(url).get( function(err, res, body) {
+        robot.http(url).get( function(err, r, body) {
             if (!body) {
                 res.send("Things are very broken. Err: "+err);
-                console.log('ERROR: '+err+', R: '+res+', BODY: '+body)
+                console.log('ERROR: '+err+', R: '+r+', BODY: '+body)
                 return;
             }
             if (body && body.match(/^302/) && body.match(/^302/)[0] =='302') {
