@@ -17,11 +17,11 @@ module.exports = function(robot) {
     var running = {};
 
     function sendPost(res, subreddit) {
-        var url = (subreddit ? "http://www.reddit.com/r/#{subreddit}/top.json" : "http://www.reddit.com/top.json");
+        var url = (subreddit ? "http://www.reddit.com/r/"+subreddit+"/top.json" : "http://www.reddit.com/top.json");
         res.http(url).get( function(err, r, body) {
             if (!body) {
-                res.send("Things are very broken. Err: {err}");
-                console.log('ERROR: {err}, R: {r}, BODY: {body}')
+                res.send("Things are very broken. Err: "+err);
+                console.log('ERROR: '+err+', R: '+r+', BODY: '+body)
                 return;
             }
             if (body && body.match(/^302/) && body.match(/^302/)[0] =='302') {
@@ -30,7 +30,7 @@ module.exports = function(robot) {
             }
             var posts = JSON.parse(body);
             if (posts.error) {
-                res.send("That doesn't seem to be a valid subreddit. [http response #{posts.error}]");
+                res.send("That doesn't seem to be a valid subreddit. [http response "+posts.error+"]");
                 return;
             }
             if (!posts.data || !posts.data.children || posts.data.children.length <= 0) {
@@ -40,10 +40,10 @@ module.exports = function(robot) {
             var random = Math.round(Math.random() * posts.data.children.length);
             var post = posts.data.children[random].data;
             if (post.domain == 'i.imgur.com') {
-                res.send("#{post.title} - http://www.reddit.com#{post.permalink}");
+                res.send(post.title+" - http://www.reddit.com"+post.permalink);
                 res.send(post.url);
             } else {
-                res.send("#{post.title} - #{post.url} - http://www.reddit.com#{post.permalink}");
+                res.send(post.title+" - "+post.url+" - http://www.reddit.com"+post.permalink);
             }
         });
     }
@@ -71,7 +71,7 @@ module.exports = function(robot) {
             }
             clearInterval(running[subreddit]);
             delete running[subreddit];
-            res.send("{subreddit} has been deleted from the queue.")
+            res.send(subreddit+" has been deleted from the queue.")
             return;
 
         /* Case !reddit list */
