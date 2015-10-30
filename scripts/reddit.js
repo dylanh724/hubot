@@ -16,12 +16,12 @@ module.exports = function(robot) {
 
     var running = {};
 
-    function sendPost(res, subreddit) {
+    function sendPost(robot, res, subreddit) {
         var url = (subreddit ? "http://www.reddit.com/r/"+subreddit+"/top.json" : "http://www.reddit.com/top.json");
-        res.http(url).get( function(err, r, body) {
+        robot.http(url).get( function(err, res, body) {
             if (!body) {
                 res.send("Things are very broken. Err: "+err);
-                console.log('ERROR: '+err+', R: '+r+', BODY: '+body)
+                console.log('ERROR: '+err+', R: '+res+', BODY: '+body)
                 return;
             }
             if (body && body.match(/^302/) && body.match(/^302/)[0] =='302') {
@@ -57,9 +57,9 @@ module.exports = function(robot) {
                 res.send("That subreddit is already queued.");
                 return;
             }
-            sendPost(res, subreddit);
+            sendPost(robot, res, subreddit);
             running[subreddit] = setInterval( function() {
-                sendPost(res, subreddit);
+                sendPost(robot, res, subreddit);
             }, 3600000 /* hourly */);
 
         /* Case !reddit stop <subreddit> */
