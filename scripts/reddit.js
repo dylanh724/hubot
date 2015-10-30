@@ -18,7 +18,12 @@ module.exports = function(robot) {
 
     function sendPost(res, subreddit) {
         var url = (subreddit ? "http://www.reddit.com/r/#{subreddit}/top.json" : "http://www.reddit.com/top.json");
-        res.http(url).get( function(err, res, body) {
+        res.http(url).get( function(err, r, body) {
+            if (!body) {
+                res.send("Things are very broken. Err: {err}");
+                console.log('ERROR: {err}, R: {r}, BODY: {body}')
+                return;
+            }
             if (body && body.match(/^302/) && body.match(/^302/)[0] =='302') {
                 res.send("That subreddit does not seem to exist.");
                 return;
