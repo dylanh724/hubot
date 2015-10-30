@@ -4,5 +4,6 @@
     "bitly.coffee",
     "cleverbot.coffee",
     "soundcloud-info.coffee",
-    "thanks-obama.coffee"
+    "thanks-obama.coffee",
+    "reddit.coffee"
 ]
