@@ -8,7 +8,6 @@ export default class HelpHandler extends AbstractHandler {
     }
 
     bindRespond() {
-        scripts = this.scripts;
         this.robot.respond(
             /lfg ?(help)? ?(.+)?/gmi,
             (res) => {
@@ -17,7 +16,7 @@ export default class HelpHandler extends AbstractHandler {
                 }
 
                 res.send("Select a script to get help for by running `!lfg help \<script>`");
-                for (let name in scripts) {
+                for (let name in this.scripts) {
                     if (!scripts.hasOwnProperty(name)) {
                         continue;
                     }
