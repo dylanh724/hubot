@@ -8,16 +8,25 @@ export default class HelpHandler extends AbstractHandler {
     }
 
     bindRespond() {
-        this.robot.respond(/lfg ?(help)? ?(.+)?/gmi, (res) => {
-            if (res.match[1] !== undefined) {
-                return res.send("```\n" + this.scripts[res.match[1]] + "\n```");
-            }
+        scripts = this.scripts;
+        this.robot.respond(
+            /lfg ?(help)? ?(.+)?/gmi,
+            (res) => {
+                if (res.match[1] !== undefined) {
+                    return res.send("```\n" + this.scripts[res.match[1]] + "\n```");
+                }
 
-            res.send("Select a script to get help for by running `!lfg help \<script>`");
-            this.scripts.forEach((script, name) => {
-                res.send(`    ${name}: ${script.getDescription()}`);
-            })
-        });
+                res.send("Select a script to get help for by running `!lfg help \<script>`");
+                for (let name in scripts) {
+                    if (!scripts.hasOwnProperty(name)) {
+                        continue;
+                    }
+
+                    let script = scripts[name];
+                    res.send(`    ${name}: ${script.getDescription()}`);
+                }
+            }
+        );
     }
 
     getName() {
