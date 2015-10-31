@@ -9,7 +9,7 @@ export default class HelpHandler extends AbstractHandler {
 
     bindRespond() {
         this.robot.respond(
-            /lfg ?(help)? ?(.+)?/gmi,
+            /lfg ?(help)? ?(.+)?/i,
             (res) => {
                 console.log(res, res.match);
                 if (res.match[1] !== undefined) {
