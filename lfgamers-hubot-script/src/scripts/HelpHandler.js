@@ -37,7 +37,7 @@ export default class HelpHandler extends AbstractHandler {
                     }
 
                     let script = this.scripts[name];
-                    response += `    ${name}: ${script.getDescription()}\n`;
+                    response += `${name}: ${script.getDescription()}\n`;
                 }
 
                 res.send(response+"```");
