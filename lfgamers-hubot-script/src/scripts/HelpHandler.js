@@ -37,11 +37,11 @@ export default class HelpHandler extends AbstractHandler {
     }
 
     getHelp() {
-        return ```
+        return `
             Commands:
               lfg - Returns a list of scripts with help
               lfg help - Returns a list of scripts with help
               lfg help \<script> - Returns the help information for the given script
-        ```;
+        `;
     }
 }

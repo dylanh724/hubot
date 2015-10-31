@@ -75,11 +75,11 @@ export default class RedditHandler extends AbstractHandler {
     }
 
     getHelp() {
-        return ```
+        return `
             Commands:
               hubot reddit start \<subreddit> - Returns a subreddit post immediately and every hour thereafter
               hubot reddit stop \<subreddit> - Stops the bot from returning any more stories from subreddit
               hubot reddit list - lists all queued subreddits
-        ```;
+        `;
     }
 }
