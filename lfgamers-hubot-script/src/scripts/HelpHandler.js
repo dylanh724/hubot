@@ -19,13 +19,9 @@ export default class HelpHandler extends AbstractHandler {
             (res) => {
                 //console.log(res, res.match[2]);
                 if (res.match[2] !== undefined) {
-                    let script = this.scripts[res.match[2]],
-                        response = `${script.getName()}: ${script.getDescription()}\n\n
-                            \`\`\`
-                            ${script.getHelp()}
-                            \`\`\``;
+                    let script = this.scripts[res.match[2]];
 
-                    return res.send(response);
+                    return res.send(`${script.getName()}: ${script.getDescription()}\n\`\`\`${script.getHelp()}\`\`\``);
                 }
 
                 let response = "Select a script to get help for by running `!lfg help \<script>`\n\n```";
