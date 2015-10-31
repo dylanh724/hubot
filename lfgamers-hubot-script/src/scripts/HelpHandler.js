@@ -20,12 +20,10 @@ export default class HelpHandler extends AbstractHandler {
                 console.log(res, res.match[2]);
                 if (res.match[2] !== undefined) {
                     let script = this.scripts[res.match[2]],
-                        response = `
-                            \`${script.getName()}\`: \`${script.getDescription()}\`\n\n
+                        response = `${script.getName()}: ${script.getDescription()}\n\n
                             \`\`\`
                             ${script.getHelp()}
-                            \`\`\`
-                        `;
+                            \`\`\``;
 
                     return res.send(response);
                 }
