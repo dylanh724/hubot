@@ -17,11 +17,11 @@ export default class HelpHandler extends AbstractHandler {
 
                 res.send("Select a script to get help for by running `!lfg help \<script>`");
                 for (let name in this.scripts) {
-                    if (!scripts.hasOwnProperty(name)) {
+                    if (!this.scripts.hasOwnProperty(name)) {
                         continue;
                     }
 
-                    let script = scripts[name];
+                    let script = this.scripts[name];
                     res.send(`    ${name}: ${script.getDescription()}`);
                 }
             }

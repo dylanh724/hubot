@@ -46,11 +46,11 @@ var HelpHandler = (function (_AbstractHandler) {
 
                 res.send("Select a script to get help for by running `!lfg help \<script>`");
                 for (var _name in _this.scripts) {
-                    if (!scripts.hasOwnProperty(_name)) {
+                    if (!_this.scripts.hasOwnProperty(_name)) {
                         continue;
                     }
 
-                    var script = scripts[_name];
+                    var script = _this.scripts[_name];
                     res.send("    " + _name + ": " + script.getDescription());
                 }
             });
