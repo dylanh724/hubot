@@ -1,1 +1,1 @@
-web: grunt && bin/hubot
+web: ./node_modules/grunt-cli/bin/grunt && bin/hubot
