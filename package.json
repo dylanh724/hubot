@@ -37,7 +37,7 @@
         "lodash-decorators":      "^0.4.11"
     },
     "engines":      {
-        "node": "5.x",
+        "node": "4.x",
         "npm":  "3.x"
     },
     "scripts":      {
