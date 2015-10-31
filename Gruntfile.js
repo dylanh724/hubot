@@ -12,33 +12,25 @@ module.exports = function (grunt) {
             dist:    {
                 files: [{
                     expand: true,
-                    cwd: 'src',
+                    cwd: 'lfg',
                     src: ['**/*.js'],
-                    dest: 'dist/'
+                    dest: 'scripts/'
                 }]
             }
         },
         watch: {
             js: {
-                files: ['src/**/*.js'],
+                files: ['lfg/**/*.js'],
                 tasks: ['js']
             }
         },
         focus: {
             dev: {}
-        },
-        copy: {
-            main: {
-                expand:  true,
-                cwd:     'dist/',
-                src:     '**',
-                dest:    '../scripts/'
-            }
         }
     });
 
     grunt.registerTask('js', ['babel']);
 
-    grunt.registerTask('default', ['js', 'copy']);
+    grunt.registerTask('default', ['js']);
     grunt.registerTask('dev', ['default', 'focus:dev']);
 };

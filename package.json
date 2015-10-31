@@ -26,14 +26,22 @@
         "request":                "^2.65.0",
         "scraper":                "0.0.9",
         "soupselect":             "^0.2.0",
+        "core-decorators":        "^0.1.5",
         "grunt":                  "^0.4.5",
-        "grunt-cli":              "^0.1.13"
+        "grunt-babel":            "^5.0.3",
+        "grunt-cli":              "^0.1.13",
+        "grunt-contrib-copy":     "^0.8.2",
+        "grunt-contrib-watch":    "^0.6.1",
+        "grunt-focus":            "^0.1.1",
+        "grunt-notify":           "^0.4.1",
+        "load-grunt-tasks":       "^3.3.0",
+        "lodash-decorators":      "^0.4.11"
     },
     "engines":      {
         "node": "5.x",
         "npm":  "3.x"
     },
     "scripts":      {
-        "postinstall": "cd lfgamers-hubot-script && npm install && grunt default && cd ../ && ls -lha scripts && ls -lha scripts/*"
+        "postinstall": "grunt default && ls -lha scripts"
     }
 }
