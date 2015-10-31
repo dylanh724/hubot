@@ -21,12 +21,13 @@ var _AbstractHandler3 = _interopRequireDefault(_AbstractHandler2);
 var HelpHandler = (function (_AbstractHandler) {
     _inherits(HelpHandler, _AbstractHandler);
 
-    function HelpHandler() {
+    function HelpHandler(robot) {
         _classCallCheck(this, HelpHandler);
 
-        _get(Object.getPrototypeOf(HelpHandler.prototype), "constructor", this).apply(this, arguments);
+        _get(Object.getPrototypeOf(HelpHandler.prototype), "constructor", this).call(this, robot);
 
         this.scripts = {};
+        this.addScript(this);
     }
 
     _createClass(HelpHandler, [{
@@ -39,22 +40,25 @@ var HelpHandler = (function (_AbstractHandler) {
         value: function bindRespond() {
             var _this = this;
 
-            this.robot.respond(/lfg ?(help)? ?(.+)?/gmi, function (res) {
-                if (res.match[1] !== undefined) {
-                    return res.send("`" + res.match[1] + "`:\n```\n" + _this.scripts[res.match[1]] + "\n```");
+            this.robot.respond(/lfg ?(help)? ?(.+)?/i, function (res) {
+                //console.log(res, res.match[2]);
+                if (res.match[2] !== undefined) {
+                    var script = _this.scripts[res.match[2]];
+
+                    return res.send(script.getName() + ": " + script.getDescription() + "\n```" + script.getHelp() + "```");
                 }
 
-                var response = "Select a script to get help for by running `!lfg help \<script>`\n";
+                var response = "Select a script to get help for by running `!lfg help \<script>`\n\n```";
                 for (var _name in _this.scripts) {
                     if (!_this.scripts.hasOwnProperty(_name)) {
                         continue;
                     }
 
                     var script = _this.scripts[_name];
-                    response += "    " + _name + ": " + script.getDescription() + "\n";
+                    response += _name + ": " + script.getDescription() + "\n";
                 }
 
-                res.send(response);
+                res.send(response + "```");
             });
         }
     }, {
@@ -70,7 +74,7 @@ var HelpHandler = (function (_AbstractHandler) {
     }, {
         key: "getHelp",
         value: function getHelp() {
-            return "\n            Commands:\n              lfg - Returns a list of scripts with help\n              lfg help - Returns a list of scripts with help\n              lfg help <script> - Returns the help information for the given script\n        ";
+            return "Commands:\nlfg - Returns a list of scripts with help\nlfg help - Returns a list of scripts with help\nlfg help <script> - Returns the help information for the given script\n        ";
         }
     }]);
 

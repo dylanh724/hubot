@@ -21,7 +21,7 @@ function importScript(robot, directory, script) {
 }
 
 exports['default'] = function (robot) {
-    var main = __dirname + '/scripts/',
+    var main = __dirname + '/Handler/',
         files = _fs2['default'].readdirSync(main),
         help = new _scriptsHelpHandler2['default'](robot);
 

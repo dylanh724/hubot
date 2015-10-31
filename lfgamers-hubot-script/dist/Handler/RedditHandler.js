@@ -115,7 +115,7 @@ var RedditHandler = (function (_AbstractHandler) {
     }, {
         key: "getHelp",
         value: function getHelp() {
-            return "\n            Commands:\n              hubot reddit start <subreddit> - Returns a subreddit post immediately and every hour thereafter\n              hubot reddit stop <subreddit> - Stops the bot from returning any more stories from subreddit\n              hubot reddit list - lists all queued subreddits\n        ";
+            return "Commands:\n    lfg reddit start <subreddit> - Returns a subreddit post immediately and every hour thereafter\n    lfg reddit stop <subreddit> - Stops the bot from returning any more stories from subreddit\n    lfg reddit list - lists all queued subreddits\n        ";
         }
     }]);
 

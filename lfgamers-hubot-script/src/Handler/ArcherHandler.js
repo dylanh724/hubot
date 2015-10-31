@@ -1,6 +1,6 @@
 import AbstractHandler from './AbstractHandler';
 
-export default class RedditHandler extends AbstractHandler {
+export default class ArcherHandler extends AbstractHandler {
 
     phrases = [
         {regex: /loggin/i, reply: 'call Kenny Loggins, \'cuz you\'re in the DANGER ZONE.'},
@@ -16,7 +16,7 @@ export default class RedditHandler extends AbstractHandler {
             headers: {
                 'User-Agent': 'User-Agent: Archerbot for Hubot (+https://github.com/github/hubot-scripts)'
             }
-        }
+        };
 
         return scraper(options, (err, jQuery) => {
             if (err) {
