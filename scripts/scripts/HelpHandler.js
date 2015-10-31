@@ -42,15 +42,23 @@ var HelpHandler = (function (_AbstractHandler) {
     }, {
         key: "bindRespond",
         value: function bindRespond() {
+            var _this = this;
+
+            scripts = this.scripts;
             this.robot.respond(/lfg ?(help)? ?(.+)?/gmi, function (res) {
                 if (res.match[1] !== undefined) {
-                    return res.send("```\n" + this.scripts[res.match[1]] + "\n```");
+                    return res.send("```\n" + _this.scripts[res.match[1]] + "\n```");
                 }
 
-                res.send("Select a script to get help for by running !lfg help \<script>");
-                this.scripts.forEach(function (script, name) {
-                    res.send("    " + name + ": " + script.getDescription());
-                });
+                res.send("Select a script to get help for by running `!lfg help \<script>`");
+                for (var _name in scripts) {
+                    if (!scripts.hasOwnProperty(_name)) {
+                        continue;
+                    }
+
+                    var script = scripts[_name];
+                    res.send("    " + _name + ": " + script.getDescription());
+                }
             });
         }
     }, {
