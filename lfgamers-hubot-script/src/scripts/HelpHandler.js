@@ -17,7 +17,7 @@ export default class HelpHandler extends AbstractHandler {
         this.robot.respond(
             /lfg ?(help)? ?(.+)?/i,
             (res) => {
-                console.log(res, res.match[2]);
+                //console.log(res, res.match[2]);
                 if (res.match[2] !== undefined) {
                     let script = this.scripts[res.match[2]],
                         response = `${script.getName()}: ${script.getDescription()}\n\n
@@ -52,11 +52,10 @@ export default class HelpHandler extends AbstractHandler {
     }
 
     getHelp() {
-        return `
-            Commands:
-              lfg - Returns a list of scripts with help
-              lfg help - Returns a list of scripts with help
-              lfg help \<script> - Returns the help information for the given script
+        return `Commands:
+lfg - Returns a list of scripts with help
+lfg help - Returns a list of scripts with help
+lfg help \<script> - Returns the help information for the given script
         `;
     }
 }
