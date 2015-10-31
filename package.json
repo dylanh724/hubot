@@ -30,8 +30,8 @@
         "grunt-cli":              "^0.1.13"
     },
     "engines":      {
-        "node": "4.1.1",
-        "npm":  "2.1.x"
+        "node": "5.x",
+        "npm":  "3.x"
     },
     "scripts":      {
         "postinstall": "cd lfgamers-hubot-script && npm install && grunt default && cd ../ && ls -lha scripts && ls -lha scripts/*"
