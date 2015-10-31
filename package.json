@@ -41,6 +41,6 @@
         "npm":  "3.x"
     },
     "scripts":      {
-        "postinstall": "grunt default && ls -lha scripts"
+        "postinstall": "grunt default"
     }
 }
