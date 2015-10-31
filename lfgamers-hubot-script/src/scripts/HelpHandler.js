@@ -11,6 +11,7 @@ export default class HelpHandler extends AbstractHandler {
         this.robot.respond(
             /lfg ?(help)? ?(.+)?/gmi,
             (res) => {
+                console.log(res, res.match);
                 if (res.match[1] !== undefined) {
                     return res.send("`" + res.match[1] + "`:\n```\n" + this.scripts[res.match[1]] + "\n```");
                 }
