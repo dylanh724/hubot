@@ -12,18 +12,20 @@ export default class HelpHandler extends AbstractHandler {
             /lfg ?(help)? ?(.+)?/gmi,
             (res) => {
                 if (res.match[1] !== undefined) {
-                    return res.send("```\n" + this.scripts[res.match[1]] + "\n```");
+                    return res.send("`" + res.match[1] + "`:\n```\n" + this.scripts[res.match[1]] + "\n```");
                 }
 
-                res.send("Select a script to get help for by running `!lfg help \<script>`");
+                let response = "Select a script to get help for by running `!lfg help \<script>`\n";
                 for (let name in this.scripts) {
                     if (!this.scripts.hasOwnProperty(name)) {
                         continue;
                     }
 
                     let script = this.scripts[name];
-                    res.send(`    ${name}: ${script.getDescription()}`);
+                    response += `    ${name}: ${script.getDescription()}\n`;
                 }
+
+                res.send(response);
             }
         );
     }
