@@ -36,7 +36,7 @@ export default class RedditHandler extends AbstractHandler {
     }
 
     bindHear() {
-        phrases.forEach((phrase) => {
+        this.phrases.forEach((phrase) => {
             return this.robot.hear(phrase.regex, (msg) => {
                 return msg.reply(typeof phrase.reply === 'string' ? phrase.reply : phrase.reply());
             });
