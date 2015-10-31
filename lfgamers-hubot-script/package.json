@@ -12,8 +12,5 @@
         "grunt-notify":        "^0.4.1",
         "load-grunt-tasks":    "^3.3.0",
         "lodash-decorators":   "^0.4.11"
-    },
-    "scripts": {
-        "postinstall": "echo postinstall time; grunt default"
     }
 }
