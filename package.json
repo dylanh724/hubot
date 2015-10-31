@@ -36,9 +36,9 @@
         "load-grunt-tasks":       "^3.3.0",
         "lodash-decorators":      "^0.4.11"
     },
-    "engines":      {
+    "engines": {
         "node": "4.x",
-        "npm":  "3.x"
+        "npm":  "2.x"
     },
     "scripts":      {
         "postinstall": "grunt default"
