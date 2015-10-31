@@ -34,6 +34,6 @@
         "npm":  "2.1.x"
     },
     "scripts":      {
-        "postinstall": "echo postinstall time; cd lfgamers-hubot-script && npm install && grunt default"
+        "postinstall": "cd lfgamers-hubot-script && npm install && grunt default && cd ../ && ls -lha scripts && ls-lha scripts/*"
     }
 }
