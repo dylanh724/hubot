@@ -14,6 +14,6 @@
         "lodash-decorators":   "^0.4.11"
     },
     "scripts": {
-        "postinstall": "grunt default"
+        "postinstall": "echo postinstall time; grunt default"
     }
 }
