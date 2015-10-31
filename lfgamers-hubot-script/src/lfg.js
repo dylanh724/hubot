@@ -1,5 +1,5 @@
 import fs from 'fs';
-import HelpHandler from './scripts/HelpHandler';
+import HelpHandler from './Helper/HelpHandler';
 
 function importScript(robot, directory, script) {
     let cls = require(directory + script);
