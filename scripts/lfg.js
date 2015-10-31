@@ -15,7 +15,9 @@ var _scriptsHelpHandler = require('./scripts/HelpHandler');
 var _scriptsHelpHandler2 = _interopRequireDefault(_scriptsHelpHandler);
 
 function importScript(robot, directory, script) {
-    return new require(directory + script)(robot);
+    var cls = require(directory + script);
+
+    return new cls(robot);
 }
 
 exports['default'] = function (robot) {

@@ -2,7 +2,9 @@ import fs from 'fs';
 import HelpHandler from './scripts/HelpHandler';
 
 function importScript(robot, directory, script) {
-    return new require(directory + script)(robot);
+    let cls = require(directory + script);
+
+    return new cls(robot);
 }
 
 export default function(robot) {
