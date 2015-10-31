@@ -1,1 +1,1 @@
-web: bin/hubot 
+web: grunt && bin/hubot
