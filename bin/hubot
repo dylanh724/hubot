@@ -4,4 +4,6 @@ set -e
 
 export PATH="node_modules/.bin:node_modules/hubot/node_modules/.bin:$PATH"
 
+grunt default
+
 exec node_modules/.bin/hubot --name "LFGBot" -l ! -a discord "$@"

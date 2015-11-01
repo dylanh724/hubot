@@ -1,10 +1,9 @@
 {
-    "name":         "LFGBot",
-    "version":      "0.0.0",
-    "private":      true,
-    "author":       "Aaron Scherer",
-    "description":  "A semi-helpful bot for LFGamers",
-    "dependencies": {
+    "name":             "hubot-discord",
+    "version":          "1.0.0",
+    "main":             "src/adapter.js",
+    "author":           "Aaron Scherer <aequasi@gmail.com> (http://aaronscherer.me)",
+    "dependencies":     {
         "cheerio":                "^0.19.0",
         "cleverbot-node":         "^0.2.1",
         "hubot":                  "^2.16.0",
@@ -34,9 +33,5 @@
         "grunt-notify":           "^0.4.1",
         "load-grunt-tasks":       "^3.3.0",
         "lodash-decorators":      "^0.4.11"
-    },
-    "engines": {
-        "node": "4.x",
-        "npm":  "2.x"
     }
 }

@@ -2,7 +2,7 @@ import AbstractHandler from './AbstractHandler';
 
 export default class ArcherHandler extends AbstractHandler {
 
-    phrases = [
+    static phrases = [
         {regex: /loggin/i, reply: 'call Kenny Loggins, \'cuz you\'re in the DANGER ZONE.'},
         {regex: /sitting down/i, reply: 'What?! At the table? Look, he thinks he\'s people!'},
         {regex: /archer/i, reply: this.fetchRandomReply},
@@ -36,7 +36,7 @@ export default class ArcherHandler extends AbstractHandler {
     }
 
     bindHear() {
-        this.phrases.forEach((phrase) => {
+        ArcherHandler.phrases.forEach((phrase) => {
             return this.robot.hear(phrase.regex, (msg) => {
                 return msg.reply(typeof phrase.reply === 'string' ? phrase.reply : phrase.reply());
             });
