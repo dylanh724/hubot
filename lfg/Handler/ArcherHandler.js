@@ -5,7 +5,7 @@ export default class ArcherHandler extends AbstractHandler {
     static phrases = [
         {regex: /loggin/i, reply: 'call Kenny Loggins, \'cuz you\'re in the DANGER ZONE.'},
         {regex: /sitting down/i, reply: 'What?! At the table? Look, he thinks he\'s people!'},
-        {regex: /^archer$/i, reply: "come out and playyyeeeayyyy"},
+        {regex: /^archer$/i, reply: ["come out and playyyeeeayyyy", "https://www.youtube.com/watch?v=ZHoJf2gXXw8"]},
         {regex: /benoit/i, reply: 'balls'},
         {regex: /love/i, reply: 'And I love that I have an erection... that doesn\'t involve homeless people.'}
     ];
@@ -38,7 +38,19 @@ export default class ArcherHandler extends AbstractHandler {
     bindHear() {
         ArcherHandler.phrases.forEach((phrase) => {
             return this.robot.hear(phrase.regex, (msg) => {
-                return msg.reply(typeof phrase.reply === 'string' ? phrase.reply : phrase.reply());
+                if (typeof phrase.reply === 'string') {
+                    return msg.reply(phrase.reply);
+                }
+
+                if (typeof phrase.reply === 'function') {
+                    return msg.reply(phrase.reply());
+                }
+
+                if (Array.isArray(phrase.reply)) {
+                    return phrase.reply.forEach((msg) => {
+                        return msg.reply(msg);
+                    })
+                }
             });
         });
     }
