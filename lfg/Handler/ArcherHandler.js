@@ -47,8 +47,8 @@ export default class ArcherHandler extends AbstractHandler {
                 }
 
                 if (Array.isArray(phrase.reply)) {
-                    return phrase.reply.forEach((msg) => {
-                        return msg.reply(msg);
+                    return phrase.reply.forEach((message) => {
+                        return msg.reply(message);
                     })
                 }
             });
