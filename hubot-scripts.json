@@ -1,6 +1,5 @@
 [
     "sms.coffee",
-    "ambush.coffee",
     "bitly.coffee",
     "cleverbot.coffee",
     "soundcloud-info.coffee",
