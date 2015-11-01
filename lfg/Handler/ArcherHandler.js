@@ -35,7 +35,7 @@ export default class ArcherHandler extends AbstractHandler {
         return 'archer';
     }
 
-    bindHear() {
+    bind() {
         ArcherHandler.phrases.forEach((phrase) => {
             return this.hear(phrase.regex, (msg) => {
                 if (typeof phrase.reply === 'string') {

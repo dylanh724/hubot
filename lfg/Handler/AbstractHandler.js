@@ -1,15 +1,10 @@
 export default class AbstractHandler {
     constructor(robot) {
         this.robot = robot;
-
-        this.bindRespond();
-        this.bindHear();
     }
 
-    bindRespond() {
-    }
-
-    bindHear() {
+    bind() {
+        throw new Error("Must override this");
     }
 
     getName() {
@@ -42,5 +37,6 @@ export default class AbstractHandler {
     }
 
     getHelp() {
+        throw new Error("Must override this");
     }
 }

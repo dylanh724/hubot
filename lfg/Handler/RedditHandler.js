@@ -1,22 +1,102 @@
 import AbstractHandler from './AbstractHandler';
+import MainStore from '../Store/MainStore';
+import IntervalStore from '../Store/IntervalStore';
+import DiscordHelper from '../Helper/DiscordHelper';
+
+import {Response} from 'hubot';
+import {autobind} from 'core-decorators';
 
 export default class RedditHandler extends AbstractHandler {
-    running = {};
+    get running() { return this.store.get('reddit.running', []); }
 
-    sendPost(res, subreddit) {
-        if (subreddit in this.running) {
+    set running(value) { return this.store.set('reddit.running', value); }
+
+    constructor(robot, mainStore, intervalStore) {
+        super(robot);
+
+        this.store     = mainStore;
+        this.intervals = intervalStore;
+        this.running   = this.store.get('reddit.running', []);
+        this.ensureIntervalsRunning();
+    }
+
+    ensureIntervalsRunning() {
+        this.robot.logger.info(`Running reddit handler. Ensuring intervals are running.`);
+
+        for (let index in this.running) {
+            if (!this.running.hasOwnProperty(index)) {
+                continue;
+            }
+
+            let data      = this.running[index],
+                room      = data.room,
+                subreddit = data.subreddit;
+
+            if (!this.intervals.has('reddit.' + room + '.' + subreddit)) {
+                let info = DiscordHelper.getRoomsForId(this.robot, room)[0];
+                this.robot.logger.info(`Running reddit handler in "${info.name}" for /r/${subreddit}.`);
+                this.run(room, subreddit);
+            }
+        }
+    }
+
+    isRunning(room, subreddit) {
+        for (let index in this.running) {
+            if (!this.running.hasOwnProperty(index)) {
+                continue;
+            }
+
+            let data = this.running[index];
+            if (room === data.room && subreddit === data.subreddit) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    getRunningInRoom(room) {
+        let running = [];
+        for (let index in this.running) {
+            if (!this.running.hasOwnProperty(index)) {
+                continue;
+            }
+
+            let data = this.running[index];
+            if (room === data.room) {
+                running.push(data.subreddit);
+            }
+        }
+
+        return running;
+    }
+
+    run(room, subreddit) {
+        this.running.push({room: room, subreddit: subreddit});
+        this.intervals.set(
+            'reddit.' + room + '.' + subreddit,
+            setInterval(() => this.sendPost(room, subreddit), 3600000 /* Hour */)
+        );
+
+        this.store.set('reddit.running', this.running);
+    }
+
+    @autobind
+    sendPost(room, subreddit) {
+        let res = new Response(this.robot, {room: room});
+
+        if (this.isRunning(room, subreddit)) {
             return res.send("That subreddit is already queued.");
         }
+
+        this.run(room, subreddit);
 
         let url = subreddit
             ? `http://www.reddit.com/r/${subreddit}/top.json?sort=top&t=hour`
             : "http://www.reddit.com/top.json?sort=top&t=hour";
-
-        console.log(url);
-        res.http(url)
+        this.robot.http(url)
             .header('Accept', 'application/json')
-            .get()
-            ((err, result, body) => {
+            .get()((err, result, body) => {
                 let posts, random, post;
 
                 if (body && body.match(/^302/) && body.match(/^302/)[0] == '302') {
@@ -42,33 +122,56 @@ export default class RedditHandler extends AbstractHandler {
 
                 return res.send(`${post.title} - ${post.url} - http://www.reddit.com${post.permalink}`);
             });
-
-        this.running[subreddit] = setInterval(() => this.sendPost(res, subreddit), 3600000 /* Hour */);
     }
 
-    bindRespond() {
-        this.respond(/reddit\s*(start|stop|list)\s*(.+)?/i, (res) => {
-            if (res.match[2]) {
-                let subreddit = res.match[2].trim();
+    stopRunning(room, subreddit) {
+        for (let index in this.running) {
+            if (!this.running.hasOwnProperty(index)) {
+                continue;
+            }
 
-                switch (res.match[1]) {
-                    case 'start':
-                        return this.sendPost(res, subreddit);
-                    case 'stop':
-                        if (!(subreddit in this.running)) {
-                            return res.send("That subreddit hasn't been queued.");
-                        }
+            let data = this.running[index];
+            if (data.room === room && data.subreddit === subreddit) {
+                delete this.running[index];
+                this.intervals.delete({room: room, subreddit: subreddit});
 
-                        clearInterval(this.running[subreddit]);
-                        delete this.running[subreddit];
+                return true;
+            }
+        }
 
-                        return res.send(`${subreddit} has been deleted from the queue.`);
-                    default:
-                        return res.send(`${res.match[1]} is not a valid command.`);
+        return false;
+    }
+
+    bind() {
+        this.respond(/reddit\s*(start|stop|list|clear)\s*(.+)?/i, (res) => {
+            let room = res.message.room;
+
+            // Listing
+            if (undefined === res.match[2]) {
+                if (res.match[1] === 'list') {
+                    this.getRunningInRoom(room).forEach((item) => { res.send(item); });
+                } else if (res.match[1] === 'wipe') {
+                    this.getRunningInRoom(room).forEach((item) => { this.stopRunning(room, item); });
+                    res.send(`${room} has been been cleared of subreddits.`)
                 }
             }
 
-            this.running.forEach((item) => { res.send(item); });
+            let subreddit = res.match[2].trim();
+
+            switch (res.match[1]) {
+                case 'start':
+                    return this.sendPost(room, subreddit);
+                case 'stop':
+                    if (!this.isRunning(room, subreddit)) {
+                        return res.send("That subreddit hasn't been queued.");
+                    }
+
+                    this.stopRunning(room, subreddit);
+
+                    return res.send(`${subreddit} has been deleted from the queue.`);
+                default:
+                    return res.send(`${res.match[1]} is not a valid command.`);
+            }
         });
     }
 

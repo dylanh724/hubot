@@ -13,7 +13,7 @@ export default class HelpHandler extends AbstractHandler {
         this.scripts[cls.getName()] = cls;
     }
 
-    bindRespond() {
+    bind() {
         this.respond(
             /^help ?(.+)?/i,
             (res) => {
