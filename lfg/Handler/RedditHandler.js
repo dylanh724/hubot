@@ -73,9 +73,7 @@ export default class RedditHandler extends AbstractHandler {
                 res.send(sub);
               }
             }
-
-              
-            }
+            
         });
     }
 
