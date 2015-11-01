@@ -149,7 +149,19 @@ export default class RedditHandler extends AbstractHandler {
             // Listing
             if (undefined === res.match[2]) {
                 if (res.match[1] === 'list') {
-                    this.getRunningInRoom(room).forEach((item) => { res.send(item); });
+                    let running = this.getRunningInRoom(room);
+                    if (running.length > 0) {
+                        let msg = "```\n";
+                        running.forEach((item) => {
+                            msg += item + "\n";
+                        });
+                        msg += "\n```";
+                        res.send(msg);
+
+                        return ;
+                    }
+
+                    return res.send("No subreddits have been queued.");
                 } else if (res.match[1] === 'wipe') {
                     this.getRunningInRoom(room).forEach((item) => { this.stopRunning(room, item); });
                     res.send(`${room} has been been cleared of subreddits.`)
