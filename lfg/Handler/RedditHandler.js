@@ -68,8 +68,13 @@ export default class RedditHandler extends AbstractHandler {
                 }
             }
 
-            for (var i=0; i<this.running.length; i++) {
-              res.send(this.running[i]);
+            for(var sub in this.running) { 
+              if (this.running.hasOwnProperty(sub)) {
+                res.send(sub);
+              }
+            }
+
+              
             }
         });
     }
