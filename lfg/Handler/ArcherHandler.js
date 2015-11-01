@@ -5,7 +5,7 @@ export default class ArcherHandler extends AbstractHandler {
     static phrases = [
         {regex: /loggin/i, reply: 'call Kenny Loggins, \'cuz you\'re in the DANGER ZONE.'},
         {regex: /sitting down/i, reply: 'What?! At the table? Look, he thinks he\'s people!'},
-        {regex: /archer/i, reply: this.fetchRandomReply},
+        {regex: /^archer$/i, reply: "come out and playyyeeeayyyy"},
         {regex: /benoit/i, reply: 'balls'},
         {regex: /love/i, reply: 'And I love that I have an erection... that doesn\'t involve homeless people.'}
     ];
