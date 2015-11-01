@@ -68,11 +68,13 @@ export default class RedditHandler extends AbstractHandler {
                 }
             }
 
+            let list_string = "```";
             for(var sub in this.running) { 
               if (this.running.hasOwnProperty(sub)) {
-                res.send(sub);
+                list_string += sub+" /n";
               }
             }
+            res.send(list_string+"```");
             
         });
     }
