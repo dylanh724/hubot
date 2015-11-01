@@ -62,7 +62,7 @@ export default class RedditHandler extends AbstractHandler {
                         clearInterval(this.running[subreddit]);
                         delete this.running[subreddit];
 
-                        return res.send("{subreddit} has been deleted from the queue.")
+                        return res.send(`${subreddit} has been deleted from the queue.`);
                     default:
                         return res.send(`${res.match[1]} is not a valid command.`);
                 }
