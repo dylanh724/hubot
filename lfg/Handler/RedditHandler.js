@@ -68,13 +68,17 @@ export default class RedditHandler extends AbstractHandler {
                 }
             }
 
-            let list_string = "```";
-            for(var sub in this.running) { 
-              if (this.running.hasOwnProperty(sub)) {
-                list_string += sub+" \n";
+            if (Object.keys(this.running).length) {
+              let list_string = "```";
+              for(var sub in this.running) { 
+                if (this.running.hasOwnProperty(sub)) {
+                  list_string += sub+" \n";
+                }
               }
+              res.send(list_string+"```");
+            } else {
+              res.send("No subreddits have been queued.");
             }
-            res.send(list_string+"```");
             
         });
     }
