@@ -14,17 +14,16 @@ export default class HelpHandler extends AbstractHandler {
     }
 
     bindRespond() {
-        this.robot.respond(
-            /lfg ?(help)? ?(.+)?/i,
+        this.respond(
+            /^help ?(.+)?/i,
             (res) => {
-                //console.log(res, res.match[2]);
-                if (res.match[2] !== undefined) {
-                    let script = this.scripts[res.match[2]];
+                if (res.match[1] !== undefined) {
+                    let script = this.scripts[res.match[1]];
 
-                    return res.send(`${script.getName()}: ${script.getDescription()}\n\`\`\`${script.getHelp()}\`\`\``);
+                    return res.send(`${script.getName()}: ${script.getDescription()}\n\`\`\`\n${script.getHelp()}\n\`\`\``);
                 }
 
-                let response = "Select a script to get help for by running `!lfg help \<script>`\n\n```";
+                let response = "Select a script to get help for by running `!lfg help \<script>`\n\n```\n";
                 for (let name in this.scripts) {
                     if (!this.scripts.hasOwnProperty(name)) {
                         continue;
@@ -34,7 +33,7 @@ export default class HelpHandler extends AbstractHandler {
                     response += `${name}: ${script.getDescription()}\n`;
                 }
 
-                res.send(response+"```");
+                res.send(response+"\n```");
             }
         );
     }
