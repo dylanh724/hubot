@@ -19,7 +19,7 @@ export default class AbstractSubscriberHandler extends AbstractHandler {
 
         this.store         = mainStore;
         this.intervals     = intervalStore;
-        this.subscriptions = this.store.get(this.getName() + '.running', []);
+        this.subscriptions = this.store.get(this.getName() + '.subscriptions', []);
 
         this.startIntervals();
     }
@@ -65,7 +65,6 @@ export default class AbstractSubscriberHandler extends AbstractHandler {
     startIntervals() {
         this.robot.logger.info(`Running ${this.getName()} handler intervals.`);
 
-        console.log(this.getName(), this.subscriptions);
         for (let index in this.subscriptions) {
             if (!this.subscriptions.hasOwnProperty(index)) {
                 continue;
@@ -78,8 +77,8 @@ export default class AbstractSubscriberHandler extends AbstractHandler {
             if (!this.intervals.has(this.getName() + '.' + room + '.' + subscriber)) {
                 let info = DiscordHelper.getRoomsForId(this.robot, room)[0];
                 this.robot.logger.info(`Running ${this.getName()} handler in "${info.name}" for ${subscriber}.`);
-                this.run(room, subscriber);
 
+                this.run(room, subscriber);
                 this.startInterval(room, subscriber);
             }
         }
@@ -157,7 +156,7 @@ export default class AbstractSubscriberHandler extends AbstractHandler {
 
     subscribe(room, subscriber) {
         this.subscriptions.push({room: room, subscriber: subscriber});
-        this.store.set(this.getName() + '.running', this.subscriptions);
+        this.store.set(this.getName() + '.subscriptions', this.subscriptions);
 
         this.startInterval(room, subscriber);
     }
@@ -176,7 +175,7 @@ export default class AbstractSubscriberHandler extends AbstractHandler {
             }
         }
 
-        this.store.set(this.getName() + '.running', this.subscriptions.filter(function (n) { return n != undefined }));
+        this.store.set(this.getName() + '.subscriptions', this.subscriptions);
 
         this.stopInterval(room, subscriber);
     }
