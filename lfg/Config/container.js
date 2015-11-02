@@ -4,6 +4,7 @@ import IntervalStore from '../Store/IntervalStore';
 import ArcherHandler from '../Handler/ArcherHandler';
 import HelpHandler from '../Handler/HelpHandler';
 import RedditHandler from '../Handler/RedditHandler';
+import TwitchHandler from '../Handler/TwitchHandler';
 
 export default (robot) => {
     return {
@@ -34,8 +35,17 @@ export default (robot) => {
                 ],
                 tags:   ['handler']
             },
-            'handler.reddit':      {
+            'handler.reddit':    {
                 module: RedditHandler,
+                args:   [
+                    {$ref: 'robot'},
+                    {$ref: 'store'},
+                    {$ref: 'store.interval'}
+                ],
+                tags:   ['handler']
+            },
+            'handler.twitch':    {
+                module: TwitchHandler,
                 args:   [
                     {$ref: 'robot'},
                     {$ref: 'store'},

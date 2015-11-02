@@ -11,8 +11,18 @@ export default class AbstractHandler {
         throw new Error("Must override this");
     }
 
+    getCommand() {
+        return this.getName();
+    }
+
     getDescription() {
         throw new Error("Must override this");
+    }
+
+    command(command, callback) {
+        let regex = new RegExp("lfg " + this.getCommand() + " (" + command + ") *(.+)?", 'i');
+
+        this.robot.respond(regex, callback);
     }
 
     respond(regex, callback) {
