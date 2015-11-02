@@ -13,7 +13,8 @@ export default class TwitchHandler extends AbstractSubscriberHandler {
     checkResponse(room, subscriber, err, res, body) {
         let json = JSON.parse(body);
 
-        if (json.stream === null ) {
+        console.log(json);
+        if (json.stream === null || json.stream === undefined) {
             if (this.isLive(subscriber)) {
                 this.live.splice(this.live.indexOf(subscriber), 1);
                 this.store.set('twitch.live', this.live);
