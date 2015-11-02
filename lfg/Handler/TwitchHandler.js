@@ -13,7 +13,6 @@ export default class TwitchHandler extends AbstractSubscriberHandler {
     checkResponse(room, subscriber, err, res, body) {
         let json = JSON.parse(body);
 
-        console.log(json);
         if (json.stream === null || json.stream === undefined) {
             if (this.isLive(subscriber)) {
                 this.live.splice(this.live.indexOf(subscriber), 1);
@@ -44,7 +43,6 @@ export default class TwitchHandler extends AbstractSubscriberHandler {
     }
 
     buildNameFromStream(stream) {
-        console.log(stream);
         return "*" + stream.channel.status + "*: " + stream.channel.url + "\n" + stream.preview.large;
     }
 
