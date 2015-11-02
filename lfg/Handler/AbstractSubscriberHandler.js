@@ -53,13 +53,16 @@ export default class AbstractSubscriberHandler extends AbstractHandler {
             return res.send("No subscriptions have been queued.");
         });
 
-        this.command('wipe|clear', (res) => {
-            let room = res.message.room;
-            let info = DiscordHelper.getRoomsForId(this.robot, room)[0];
+        this.command('wipe|clear', this.wipe);
+    }
 
-            this.getSubscribedInRoom(room).forEach((item) => { this.unsubscribe(room, item); });
-            res.send(`\`${info.name}\` has been been cleared of subscriptions.`)
-        });
+    @autobind
+    wipe(res) {
+        let room = res.message.room;
+        let info = DiscordHelper.getRoomsForId(this.robot, room)[0];
+
+        this.getSubscribedInRoom(room).forEach((item) => { this.unsubscribe(room, item); });
+        res.send(`\`${info.name}\` has been been cleared of subscriptions.`)
     }
 
     startIntervals() {
@@ -98,14 +101,14 @@ export default class AbstractSubscriberHandler extends AbstractHandler {
     }
 
     @autobind
-    run(room, subscriber) {
+    run(room, subscriber, flag = false) {
         let res = new Response(this.robot, {room: room}),
             url = this.getUrl(subscriber),
             http = this.robot.http(url);
 
         this.setHeaders(http);
 
-        http.get()((err, result, body) => this.checkResponse(room, subscriber, err, res, body));
+        http.get()((err, result, body) => this.checkResponse(room, subscriber, err, res, body, flag));
     }
 
     /**

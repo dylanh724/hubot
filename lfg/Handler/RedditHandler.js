@@ -26,6 +26,14 @@ export default class RedditHandler extends AbstractSubscriberHandler {
         `;
     }
 
+    @autobind
+    wipe(res) {
+        super.wipe(res);
+
+        this.lastPosts = {};
+        this.store.set('reddit.lastPosts', this.lastPosts);
+    }
+
     getInterval() {
         return 60 * 60;
     }

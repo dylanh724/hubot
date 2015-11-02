@@ -13,30 +13,37 @@ export default class TwitchHandler extends AbstractSubscriberHandler {
         super.bind();
 
         this.command('online', (res) => {
-            let room = res.message.room,
-                msg  = "The following users are currently streaming: \n```\n",
-                count = 0;
+            let room = res.message.room;
 
+            if (res.match[2] === undefined) {
+                let msg   = "The following users are currently streaming: \n```\n",
+                    count = 0;
 
-            this.live.forEach((info) => {
-                if (info.room === room) {
-                    count++;
-                    msg += `${info.subscriber}: http://www.twitch.tv/${info.subscriber}\n`;
+                console.log(this.live);
+
+                this.live.forEach((info) => {
+                    if (info.room === room) {
+                        count++;
+                        msg += `${info.subscriber}: http://www.twitch.tv/${info.subscriber}\n`;
+                    }
+                });
+
+                if (count === 0) {
+                    return res.send("There are no streamers online.")
                 }
-            });
 
-            if (count === 0) {
-                return res.send("There are no streamers online.")
+                msg += "```\n";
+
+                return res.send(msg);
             }
 
-            msg += "```\n";
-
-            res.send(msg);
+            let subscriber = res.match[2];
+            this.run(room, subscriber, true);
         })
     }
 
     @autobind
-    checkResponse(room, subscriber, err, res, body) {
+    checkResponse(room, subscriber, err, res, body, replyIfOffline) {
         let json = JSON.parse(body);
 
         if (json.stream === null || json.stream === undefined) {
@@ -47,15 +54,20 @@ export default class TwitchHandler extends AbstractSubscriberHandler {
                 return res.send(`${subscriber} has gone offline :(`);
             }
 
+            if (replyIfOffline) {
+                res.send(`${subscriber} is offline`);
+            }
+
             return;
         }
 
-        if (this.isLive(room, subscriber) !== false) {
+        if (!replyIfOffline && this.isLive(room, subscriber) !== false) {
             return;
         }
 
-        this.live.push({room: room, subscriber: subscriber});
-        this.store.set('twitch.live', this.live);
+        if (!replyIfOffline) {
+            this.setLive(room, subscriber);
+        }
 
         let stream = json.stream,
             name = this.buildNameFromStream(stream),
@@ -100,6 +112,21 @@ export default class TwitchHandler extends AbstractSubscriberHandler {
     lfg twitch online - List all online subscribers for the current room
         `;
     }
+
+    setLive(room, subscriber) {
+        this.live.push({room: room, subscriber: subscriber});
+
+        this.store.set('twitch.live', this.live);
+    }
+
+    @autobind
+    wipe(res) {
+        super.wipe(res);
+
+        this.live = [];
+        this.store.set('twitch.live', this.live);
+    }
+
 
     getInterval() {
         return 30;
