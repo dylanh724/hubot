@@ -56,7 +56,7 @@ export default class TwitchHandler extends AbstractSubscriberHandler {
     }
 
     getInterval() {
-        return 60 * 5;
+        return 30;
     }
 
     getUrl(subscriber) {
@@ -66,6 +66,6 @@ export default class TwitchHandler extends AbstractSubscriberHandler {
     setHeaders(http) {
         http
             .header('Accept', 'application/vnd.twitchtv.v3+json')
-            .header('Client-ID', 'k4mblyu1g053kh915juoae8k687bvwd');
+            .header('Client-ID', process.env.HUBOT_LFG_TWITCH_CLIENT_ID);
     }
 }
