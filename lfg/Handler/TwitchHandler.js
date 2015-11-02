@@ -44,6 +44,7 @@ export default class TwitchHandler extends AbstractSubscriberHandler {
     }
 
     buildNameFromStream(stream) {
+        console.log(stream);
         return "*" + stream.channel.status + "*: " + stream.channel.url + "\n" + stream.preview.large;
     }
 
