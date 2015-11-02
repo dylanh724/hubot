@@ -14,11 +14,20 @@ export default class TwitchHandler extends AbstractSubscriberHandler {
 
         this.command('online', (res) => {
             let room = res.message.room,
-                msg  = "The following users are currently streaming: \n```\n";
+                msg  = "The following users are currently streaming: \n```\n",
+                count = 0;
 
-            this.live.forEach((subscriber) => {
-                msg += `${subscriber}: http://www.twitch.tv/${subscriber}\n`;
-            })
+
+            this.live.forEach((info) => {
+                if (info.room === room) {
+                    count++;
+                    msg += `${subscriber}: http://www.twitch.tv/${subscriber}\n`;
+                }
+            });
+
+            if (count === 0) {
+                res.send("There are no streamers online.")
+            }
 
             msg += "```\n";
 
@@ -31,8 +40,8 @@ export default class TwitchHandler extends AbstractSubscriberHandler {
         let json = JSON.parse(body);
 
         if (json.stream === null || json.stream === undefined) {
-            if (this.isLive(subscriber)) {
-                this.live.splice(this.live.indexOf(subscriber), 1);
+            if (this.isLive(room, subscriber) !== false) {
+                this.live.splice(this.isLive(room, subscriber));
                 this.store.set('twitch.live', this.live);
 
                 return res.send(`${subscriber} has gone offline :(`);
@@ -41,11 +50,11 @@ export default class TwitchHandler extends AbstractSubscriberHandler {
             return;
         }
 
-        if (this.isLive(subscriber)) {
+        if (this.isLive(room, subscriber) !== false) {
             return;
         }
 
-        this.live.push(subscriber);
+        this.live.push({room: room, subscriber: subscriber});
         this.store.set('twitch.live', this.live);
 
         let stream = json.stream,
@@ -55,8 +64,19 @@ export default class TwitchHandler extends AbstractSubscriberHandler {
         return res.send(`${subscriber} is streaming${game !== null ? ' ' + game : ''}!\n${name}`);
     }
 
-    isLive(subscriber) {
-        return this.live.indexOf(subscriber) >= 0;
+    isLive(room, subscriber) {
+        for (let index in this.live) {
+            if (!this.live.hasOwnProperty(index)) {
+                continue;
+            }
+
+            let info = this.live[index];
+            if (info.room === room && info.subscriber === subscriber) {
+                return index;
+            }
+        }
+
+        return false;
     }
 
     buildNameFromStream(stream) {
