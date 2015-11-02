@@ -26,7 +26,7 @@ export default class TwitchHandler extends AbstractSubscriberHandler {
             });
 
             if (count === 0) {
-                res.send("There are no streamers online.")
+                return res.send("There are no streamers online.")
             }
 
             msg += "```\n";
