@@ -9,6 +9,23 @@ import {autobind} from 'core-decorators';
 export default class TwitchHandler extends AbstractSubscriberHandler {
     live = this.store.get('twitch.live', []);
 
+    bind() {
+        super.bind();
+
+        this.command('online', (res) => {
+            let room = res.message.room,
+                msg  = "The following users are currently streaming: \n```\n";
+
+            this.live.forEach((subscriber) => {
+                msg += `${subscriber}: http://www.twitch.tv/${subscriber}\n`;
+            })
+
+            msg += "```\n";
+
+            res.send(msg);
+        })
+    }
+
     @autobind
     checkResponse(room, subscriber, err, res, body) {
         let json = JSON.parse(body);
