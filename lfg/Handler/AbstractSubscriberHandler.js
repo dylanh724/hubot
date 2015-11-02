@@ -65,6 +65,7 @@ export default class AbstractSubscriberHandler extends AbstractHandler {
     startIntervals() {
         this.robot.logger.info(`Running ${this.getName()} handler intervals.`);
 
+        console.log(this.getName(), this.subscriptions);
         for (let index in this.subscriptions) {
             if (!this.subscriptions.hasOwnProperty(index)) {
                 continue;
