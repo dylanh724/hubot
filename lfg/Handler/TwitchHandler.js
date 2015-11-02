@@ -24,7 +24,7 @@ export default class TwitchHandler extends AbstractSubscriberHandler {
             return;
         }
 
-        console.log(subscriber, live);
+        console.log(subscriber, this.live);
         if (subscriber in this.live) {
             return;
         }
