@@ -21,7 +21,7 @@ export default class TwitchHandler extends AbstractSubscriberHandler {
             this.live.forEach((info) => {
                 if (info.room === room) {
                     count++;
-                    msg += `${subscriber}: http://www.twitch.tv/${subscriber}\n`;
+                    msg += `${info.subscriber}: http://www.twitch.tv/${info.subscriber}\n`;
                 }
             });
 

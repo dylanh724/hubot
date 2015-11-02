@@ -7,7 +7,7 @@ import {Response} from 'hubot';
 import {autobind} from 'core-decorators';
 
 export default class RedditHandler extends AbstractSubscriberHandler {
-    lastPosts = {};
+    lastPosts = this.store.get('reddit.lastPosts', {});
 
     getName() {
         return 'reddit';
@@ -59,6 +59,7 @@ export default class RedditHandler extends AbstractSubscriberHandler {
         }
 
         this.lastPosts[room + subscriber] = post;
+        this.store.set('reddit.lastPosts', this.lastPosts);
 
         if (post.domain == 'i.imgur.com') {
             res.send(`${post.title} - http://www.reddit.com${post.permalink}`);
