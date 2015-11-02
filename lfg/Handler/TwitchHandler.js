@@ -77,6 +77,7 @@ export default class TwitchHandler extends AbstractSubscriberHandler {
     lfg twitch unsubscribe|unsub \<subscriber> - Stops the bot from returning any more stories from subscriber
     lfg twitch list - lists all queued subscribers
     lfg twitch clear|wipe - clear all queued subscribers
+    lfg twitch online - List all online subscribers for the current room
         `;
     }
 
