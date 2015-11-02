@@ -9,6 +9,8 @@ import {autobind} from 'core-decorators';
 export default class TwitchHandler extends AbstractSubscriberHandler {
     live = this.store.get('twitch.live', []);
 
+    runAtStart = false;
+
     bind() {
         super.bind();
 

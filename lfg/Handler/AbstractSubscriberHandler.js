@@ -14,6 +14,8 @@ export default class AbstractSubscriberHandler extends AbstractHandler {
         throw Error("Must Override");
     }
 
+    runAtStart = true;
+
     constructor(robot, mainStore, intervalStore) {
         super(robot);
 
@@ -81,7 +83,9 @@ export default class AbstractSubscriberHandler extends AbstractHandler {
                 let info = DiscordHelper.getRoomsForId(this.robot, room)[0];
                 this.robot.logger.info(`Running ${this.getName()} handler in "${info.name}" for ${subscriber}.`);
 
-                this.run(room, subscriber);
+                if (this.runAtStart) {
+                    this.run(room, subscriber);
+                }
                 this.startInterval(room, subscriber);
             }
         }
