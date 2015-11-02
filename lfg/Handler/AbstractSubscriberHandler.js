@@ -169,7 +169,7 @@ export default class AbstractSubscriberHandler extends AbstractHandler {
 
             let data = this.subscriptions[index];
             if (data.room === room && data.subscriber === subscriber) {
-                delete this.subscriptions[index];
+                this.subscriptions.splice(index, 1);
 
                 break;
             }

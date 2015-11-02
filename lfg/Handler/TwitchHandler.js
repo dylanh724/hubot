@@ -7,7 +7,7 @@ import {Response} from 'hubot';
 import {autobind} from 'core-decorators';
 
 export default class TwitchHandler extends AbstractSubscriberHandler {
-    live = [];
+    live = this.store.get('twitch.live', []);
 
     @autobind
     checkResponse(room, subscriber, err, res, body) {
@@ -15,17 +15,22 @@ export default class TwitchHandler extends AbstractSubscriberHandler {
 
         if (json.stream === null ) {
             if (subscriber in this.live) {
+                this.live.splice(this.live.indexOf(subscriber), 1);
+                this.store.set('twitch.live', this.live);
+
                 return res.send(`${subscriber} has gone offline :(`);
             }
 
             return;
         }
 
+        console.log(subscriber, live);
         if (subscriber in this.live) {
             return;
         }
 
         this.live.push(subscriber);
+        this.store.set('twitch.live', this.live);
 
         let stream = json.stream,
             name = this.buildNameFromStream(stream),
