@@ -14,7 +14,7 @@ export default class TwitchHandler extends AbstractSubscriberHandler {
         let json = JSON.parse(body);
 
         if (json.stream === null ) {
-            if (subscriber in this.live) {
+            if (this.isLive(subscriber)) {
                 this.live.splice(this.live.indexOf(subscriber), 1);
                 this.store.set('twitch.live', this.live);
 
@@ -25,7 +25,7 @@ export default class TwitchHandler extends AbstractSubscriberHandler {
         }
 
         console.log(subscriber, this.live);
-        if (subscriber in this.live) {
+        if (this.isLive(subscriber)) {
             return;
         }
 
@@ -37,6 +37,10 @@ export default class TwitchHandler extends AbstractSubscriberHandler {
             game = stream.channel.game;
 
         return res.send(`${subscriber} is streaming${game !== null ? ' ' + game : ''}!\n${name}`);
+    }
+
+    isLive(subscriber) {
+        return this.live.indexOf(subscriber) >= 0;
     }
 
     buildNameFromStream(stream) {
