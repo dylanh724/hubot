@@ -39,7 +39,7 @@ export default class RedditHandler extends AbstractSubscriberHandler {
     }
 
     getUrl(subscriber) {
-        return `http://www.reddit.com/r/${subscriber}/top.json?sort=top&t=hour`;
+        return `http://www.reddit.com/r/${subscriber}/top.json?sort=top&t=day`;
     }
 
     setHeaders(http) {
@@ -61,7 +61,11 @@ export default class RedditHandler extends AbstractSubscriberHandler {
             return res.send(`While ${subscriber} exists, there does not seem to be anything there.`);
         }
 
-        let post = posts.data.children[0].data;
+        let pIndex = Math.floor(Math.random()*posts.data.children.length);
+        if (pIndex > 4) {
+          pIndex = 4;
+        }
+        let post = posts.data.children[pIndex].data;
         if (post === this.lastPosts[room + subscriber]) {
             return false;
         }
