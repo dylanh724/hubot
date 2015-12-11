@@ -7,7 +7,8 @@ export default class ArcherHandler extends AbstractHandler {
         {regex: /sitting down/i, reply: 'What?! At the table? Look, he thinks he\'s people!'},
         {regex: /^archer$/i, reply: ["come out and playyyeeeayyyy", "https://www.youtube.com/watch?v=ZHoJf2gXXw8"]},
         {regex: /benoit/i, reply: 'balls'},
-        {regex: /erection/i, reply: 'And I love that I have an erection... that doesn\'t involve homeless people.'}
+        {regex: /erection/i, reply: 'And I love that I have an erection... that doesn\'t involve homeless people.'},
+        {regex: /(╯°□°）╯︵ ┻━┻/i, reply: '┬─┬﻿ ノ( ゜-゜ノ)'}
     ];
 
     fetchRandomReply() {
