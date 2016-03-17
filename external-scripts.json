@@ -4,13 +4,16 @@
   "hubot-heroku-keepalive",
   "hubot-google-images",
   "hubot-google-translate",
-  "hubot-pugme",
   "hubot-maps",
   "hubot-redis-brain",
   "hubot-rules",
   "hubot-shipit",
   "hubot-youtube-v3",
+  "hubot-calculator",
+  "hubot-thank-you",
+  "hubot-factoids",
   "hubot-remind-advanced",
   "hubot-karma-classic",
-  "hubot-ambush"
+  "hubot-ambush"，
+  "hubot-standup-alarm"
 ]
