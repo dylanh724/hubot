@@ -36,7 +36,8 @@
     "lodash-decorators": "^0.4.11",
     "request": "^2.65.0",
     "scraper": "0.0.9",
-    "soupselect": "^0.2.0"
+    "soupselect": "^0.2.0",
+	"hubot-google-translate": "awailly/hubot-google-translate#fix-tests"
   },
   "engines": {
     "node": "4.x",
