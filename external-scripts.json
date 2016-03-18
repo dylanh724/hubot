@@ -15,5 +15,6 @@
   "hubot-remind-advanced",
   "hubot-karma-classic",
   "hubot-ambush",
-  "hubot-standup-alarm"
+  "hubot-standup-alarm",
+  "hubot-trello"
 ]
