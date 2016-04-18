@@ -24,6 +24,7 @@
     "hubot-factoids": "^0.2.7",
     "hubot-google-images": "^0.2.2",
     "hubot-google-translate": "github:awailly/hubot-google-translate#fix-tests",
+    "hubot-group-alias": "^2.1.2",
     "hubot-help": "^0.1.3",
     "hubot-heroku-keepalive": "^1.0.2",
     "hubot-karma-classic": "^1.0.2",
